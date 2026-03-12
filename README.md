@@ -1,4 +1,4 @@
-[Cantonese songs V8.txt](https://github.com/user-attachments/files/25937344/Cantonese.songs.V8.txt)
+[Canton V9.html](https://github.com/user-attachments/files/25937499/Canton.V9.html)
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
@@ -59,10 +59,7 @@
             width: 100%;
             max-width: 32rem; 
             position: relative;
-            display: none; 
         }
-        
-        #home-screen { display: flex; flex-direction: column; } 
 
         .vinyl-record {
             background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px);
@@ -101,7 +98,6 @@
         .btn-purple { background-color: #1f2937; border: 1px solid #a855f7; color: #c084fc; box-shadow: 0 0 10px rgba(168,85,247,0.2); }
         .btn-pink { background-color: #1f2937; border: 1px solid var(--neon-pink); color: #f472b6; box-shadow: 0 0 15px rgba(255,0,255,0.4); }
         
-        /* 6 個選項的按鈕樣式，縮小字體確保不會破版 */
         .btn-option {
             background-color: #1f2937;
             border: 1px solid #4b5563;
@@ -123,12 +119,15 @@
         @media (min-width: 640px) {
             .btn-option { font-size: 1rem; padding: 0.75rem; }
         }
-        .btn-option:hover { border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0,243,255,0.5); }
+        .btn-option:hover:not(:disabled) { border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0,243,255,0.5); }
         .btn-option:disabled { cursor: not-allowed; }
 
         .fade-in { animation: fadeIn 0.4s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* 強制隱藏工具 */
+        .hidden-screen { display: none !important; }
+
         /* 等化器 */
         .eq-bar { width: 6px; background-color: var(--neon-cyan); border-radius: 4px; transition: height 0.1s ease; box-shadow: 0 0 8px var(--neon-cyan); }
         .eq-playing .eq-bar:nth-child(1) { animation: eq-bounce 0.8s infinite alternate ease-in-out; }
@@ -147,7 +146,7 @@
     <audio id="audio-player" preload="auto"></audio>
 
     <!-- 主畫面 -->
-    <div id="home-screen" class="arcade-panel fade-in">
+    <div id="home-screen" class="arcade-panel flex flex-col fade-in">
         <div class="text-6xl mb-4 text-center w-full flex justify-center">
             <i class="fas fa-compact-disc text-gray-400"></i>
         </div>
@@ -171,7 +170,7 @@
     </div>
 
     <!-- 遊戲畫面 -->
-    <div id="game-screen" class="arcade-panel hidden fade-in" style="border-color: var(--neon-purple);">
+    <div id="game-screen" class="arcade-panel hidden-screen fade-in" style="border-color: var(--neon-purple);">
         
         <div class="flex justify-between items-center bg-black/50 p-3 rounded-lg border border-gray-700 mb-4">
             <button onclick="returnToHome()" class="text-gray-400 hover:text-white">
@@ -212,7 +211,7 @@
     </div>
 
     <!-- 結算畫面 -->
-    <div id="result-screen" class="arcade-panel hidden fade-in" style="border-color: var(--neon-yellow);">
+    <div id="result-screen" class="arcade-panel hidden-screen fade-in" style="border-color: var(--neon-yellow);">
         <h2 class="text-4xl text-center font-arcade text-yellow-400 mb-2 neon-text-cyan" style="text-shadow: 0 0 10px #fbbf24;">GAME OVER</h2>
         <p class="text-gray-300 text-center mb-6 font-arcade text-sm">STAGE CLEARED</p>
         
@@ -233,12 +232,7 @@
     </div>
 
     <script type="text/javascript">
-        // 為了確保在 GitHub Pages 正常運行，加入全域錯誤捕捉
-        window.onerror = function(msg, url, line) {
-            console.error("Error: " + msg + " at line " + line);
-        };
-
-        // 核心歌庫 (已移除 Dear Jane 到底發生過什麼事)
+        // 核心歌庫
         let songDatabase = [
             // 陳奕迅
             { title: '富士山下', artist: '陳奕迅', year: 2006, gender: 'M', query: '陳奕迅 富士山下' },
@@ -293,14 +287,14 @@
             { title: '大哥', artist: '衛蘭', year: 2005, gender: 'F', query: '衛蘭 大哥' },
             { title: '假使世界原來不像你預期', artist: '方皓玟', year: 2018, gender: 'F', query: '方皓玟 假使世界原來不像你預期' },
 
-            // 組合 
+            // 組合
             { title: '天梯', artist: 'C AllStar', year: 2010, gender: 'G', query: 'C AllStar 天梯' },
             { title: '留下來的人', artist: 'C AllStar', year: 2021, gender: 'G', query: 'C AllStar 留下來的人' },
             { title: '專業失戀30年', artist: 'C AllStar', year: 2016, gender: 'G', query: 'C AllStar 專業失戀30年' },
             { title: '沒明日的恐懼', artist: 'C AllStar', year: 2021, gender: 'G', query: 'C AllStar 沒明日的恐懼' },
             { title: '銀河修理員', artist: 'Dear Jane', year: 2020, gender: 'G', query: 'Dear Jane 銀河修理員' },
             
-            // 單飛成員 
+            // 單飛成員
             { title: '人類群星閃耀時', artist: '柳應廷 Jer', year: 2021, gender: 'M', query: '柳應廷 人類群星閃耀時' },
             { title: '狂人日記', artist: '柳應廷 Jer', year: 2021, gender: 'M', query: '柳應廷 狂人日記' },
             { title: 'E先生 連環不幸事件', artist: '呂爵安 Edan', year: 2021, gender: 'M', query: '呂爵安 E先生' },
@@ -317,7 +311,6 @@
         const TOTAL_QUESTIONS = 10;
         let hasInteracted = false;
 
-        // 安全播放函式，避免 Safari 阻擋導致程式崩潰
         function safePlay(player) {
             try {
                 let playPromise = player.play();
@@ -332,7 +325,6 @@
             }
         }
 
-        // 超時 Fetch 函式，兼容舊版瀏覽器
         function fetchWithTimeout(url, timeout = 4000) {
             return new Promise((resolve, reject) => {
                 const timer = setTimeout(() => reject(new Error('Timeout')), timeout);
@@ -375,7 +367,6 @@
             });
         });
 
-        // 綁定到 window 確保全域可用
         window.togglePlay = function() {
             if (!currentAudioUrl) return;
             if (audioPlayer.paused) {
@@ -394,15 +385,16 @@
             document.getElementById('equalizer').classList.remove('eq-playing');
         }
 
+        // 強制隱藏與顯示的邏輯更新
         function showScreen(screenId) {
             const screens = ['home-screen', 'game-screen', 'result-screen'];
             screens.forEach(id => {
                 const el = document.getElementById(id);
                 if (id === screenId) {
-                    el.classList.remove('hidden');
+                    el.classList.remove('hidden-screen');
                     el.classList.add('flex', 'flex-col');
                 } else {
-                    el.classList.add('hidden');
+                    el.classList.add('hidden-screen');
                     el.classList.remove('flex', 'flex-col');
                 }
             });
@@ -424,7 +416,7 @@
         }
 
         window.startGame = function(mode) {
-            // 解鎖 iOS 音訊限制
+            hasInteracted = true;
             if (audioPlayer) {
                 audioPlayer.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
                 safePlay(audioPlayer);
@@ -437,7 +429,7 @@
             let shuffledSongs = shuffle([...songDatabase]);
             gameQueue = shuffledSongs.slice(0, TOTAL_QUESTIONS);
 
-            showScreen('game-screen');
+            showScreen('game-screen'); // 確保切換畫面
             
             const titles = {
                 'year': 'MODE 1: 估年份',
@@ -449,7 +441,6 @@
             prepareAndLoadQuestion();
         };
 
-        // 準備題目 (包含自動刪除與替換機制)
         async function prepareAndLoadQuestion() {
             stopMusic();
             const answerArea = document.getElementById('answer-area');
@@ -457,7 +448,6 @@
             const status = document.getElementById('audio-status');
             const infoDisplay = document.getElementById('question-info');
 
-            // 顯示載入中
             document.getElementById('current-question').innerText = currentIndex + 1;
             document.getElementById('total-questions').innerText = TOTAL_QUESTIONS;
             infoDisplay.innerText = "";
@@ -469,7 +459,6 @@
             let currentSong = gameQueue[currentIndex];
             let audioFound = false;
             
-            // 嘗試抓取音樂，若失敗則刪除該歌並替換，最多試 5 次防止無窮迴圈
             for (let attempts = 0; attempts < 5; attempts++) {
                 try {
                     let url = `https://itunes.apple.com/search?term=${encodeURIComponent(currentSong.query)}&entity=song&country=hk&limit=1`;
@@ -480,16 +469,14 @@
                         currentAudioUrl = data.results[0].previewUrl;
                         audioPlayer.src = currentAudioUrl;
                         audioFound = true;
-                        break; // 成功找到音樂，跳出迴圈
+                        break; 
                     } else {
                         throw new Error("No preview available");
                     }
                 } catch (err) {
                     console.log("找不到音樂，刪除並替換:", currentSong.title);
-                    // 從總庫刪除
                     songDatabase = songDatabase.filter(s => s.title !== currentSong.title);
                     
-                    // 隨機選一首新的且不在 Queue 中的歌
                     let newSong;
                     let findAttempts = 0;
                     do {
@@ -502,7 +489,6 @@
                 }
             }
 
-            // 渲染畫面
             playBtn.disabled = false;
             status.innerText = "READY";
             playBtn.innerHTML = '<i class="fas fa-play"></i> 播放音樂';
@@ -510,7 +496,6 @@
             if (audioFound) {
                 safePlay(audioPlayer);
             } else {
-                // 如果連續 5 首失敗 (極端情況)，給一個假按鈕
                 status.innerText = "⚠️ 音樂載入失敗";
                 playBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 盲估模式';
             }
@@ -518,22 +503,18 @@
             renderOptions(currentSong);
         }
 
-        // 渲染文字與按鈕
         function renderOptions(currentSong) {
             const answerArea = document.getElementById('answer-area');
             const infoDisplay = document.getElementById('question-info');
             answerArea.innerHTML = ''; 
 
-            // 根據模式設定提示文字
             if (currentMode === 'year') {
                 infoDisplay.innerText = `《${currentSong.title}》 - ${currentSong.artist}`;
                 infoDisplay.className = "mb-4 text-center font-bold text-base text-gray-200 w-full break-words";
             } else if (currentMode === 'singer') {
-                // 估歌手：不顯示歌名
                 infoDisplay.innerText = `❓ 請聆聽音樂猜測歌手 ❓`;
                 infoDisplay.className = "mb-4 text-center font-bold text-base text-pink-400 w-full break-words";
             } else if (currentMode === 'song') {
-                // 估歌名：不顯示歌手
                 infoDisplay.innerText = `❓ 請聆聽音樂猜測歌名 ❓`;
                 infoDisplay.className = "mb-4 text-center font-bold text-base text-cyan-300 w-full break-words";
             }
@@ -541,7 +522,6 @@
             let options = [];
             let correctAns;
             
-            // 產生 6 個選項
             if (currentMode === 'year') {
                 correctAns = currentSong.year;
                 options.push(correctAns);
@@ -561,7 +541,6 @@
                     if (options.length >= 6) break;
                     options.push(uniqueArtists[i]);
                 }
-                
                 if(options.length < 6) {
                     let allUniqueArtists = [...new Set(songDatabase.map(s => s.artist))];
                     allUniqueArtists = shuffle(allUniqueArtists);
@@ -576,7 +555,6 @@
                 correctAns = currentSong.title;
                 options.push(correctAns);
                 let pool = songDatabase.filter(s => s.artist === currentSong.artist && s.title !== correctAns);
-                
                 if (pool.length < 5) {
                     let extraPool = songDatabase.filter(s => s.gender === currentSong.gender && s.title !== correctAns && !pool.includes(s));
                     pool = pool.concat(extraPool);
@@ -588,7 +566,6 @@
                         options.push(pool[i].title);
                     }
                 }
-                
                 if (options.length < 6) {
                     let allPool = shuffle([...songDatabase]);
                      for (let i = 0; i < allPool.length; i++) {
