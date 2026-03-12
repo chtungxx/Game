@@ -1,4 +1,4 @@
-[Canton.html](https://github.com/user-attachments/files/25937103/Canton.html)
+[Cantonese songs V8.txt](https://github.com/user-attachments/files/25937344/Cantonese.songs.V8.txt)
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="廣東歌迷">
-    <title>廣東歌迷序會 - DJ Challenge Edition</title>
+    <title>廣東歌迷序會 - DJ Challenge</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -66,9 +66,9 @@
 
         .vinyl-record {
             background: repeating-radial-gradient(#111, #111 4px, #222 5px, #222 6px);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px #9d00ff;
-            width: 10rem;
-            height: 10rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px var(--neon-purple);
+            width: 9rem;
+            height: 9rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -98,22 +98,17 @@
         .game-btn:disabled { opacity: 0.7; transform: none; cursor: not-allowed; }
 
         .btn-cyan { background-color: #1f2937; border: 1px solid var(--neon-cyan); color: #22d3ee; box-shadow: 0 0 10px rgba(0,243,255,0.2); }
-        .btn-cyan:hover { background-color: #164e63; }
-        
         .btn-purple { background-color: #1f2937; border: 1px solid #a855f7; color: #c084fc; box-shadow: 0 0 10px rgba(168,85,247,0.2); }
-        .btn-purple:hover { background-color: #581c87; }
-
         .btn-pink { background-color: #1f2937; border: 1px solid var(--neon-pink); color: #f472b6; box-shadow: 0 0 15px rgba(255,0,255,0.4); }
-        .btn-pink:hover { background-color: #831843; }
         
-        /* 選項按鈕縮小一點，適應 6 個選項 */
+        /* 6 個選項的按鈕樣式，縮小字體確保不會破版 */
         .btn-option {
             background-color: #1f2937;
             border: 1px solid #4b5563;
             color: white;
-            padding: 0.6rem;
+            padding: 0.5rem;
             border-radius: 0.5rem;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.2s;
             cursor: pointer;
@@ -122,7 +117,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 3.5rem; /* 確保按鈕高度一致 */
+            min-height: 3.5rem;
+            line-height: 1.2;
+        }
+        @media (min-width: 640px) {
+            .btn-option { font-size: 1rem; padding: 0.75rem; }
         }
         .btn-option:hover { border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0,243,255,0.5); }
         .btn-option:disabled { cursor: not-allowed; }
@@ -130,7 +129,7 @@
         .fade-in { animation: fadeIn 0.4s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 等化器動畫 */
+        /* 等化器 */
         .eq-bar { width: 6px; background-color: var(--neon-cyan); border-radius: 4px; transition: height 0.1s ease; box-shadow: 0 0 8px var(--neon-cyan); }
         .eq-playing .eq-bar:nth-child(1) { animation: eq-bounce 0.8s infinite alternate ease-in-out; }
         .eq-playing .eq-bar:nth-child(2) { animation: eq-bounce 0.5s infinite alternate ease-in-out 0.2s; background-color: var(--neon-pink); box-shadow: 0 0 8px var(--neon-pink);}
@@ -138,7 +137,7 @@
         .eq-playing .eq-bar:nth-child(4) { animation: eq-bounce 0.6s infinite alternate ease-in-out 0.1s; background-color: var(--neon-pink); box-shadow: 0 0 8px var(--neon-pink);}
         .eq-playing .eq-bar:nth-child(5) { animation: eq-bounce 0.7s infinite alternate ease-in-out 0.3s; }
 
-        @keyframes eq-bounce { 0% { height: 10px; } 100% { height: 40px; } }
+        @keyframes eq-bounce { 0% { height: 8px; } 100% { height: 35px; } }
         
         audio::-webkit-media-controls { display: none !important; }
     </style>
@@ -148,7 +147,7 @@
     <audio id="audio-player" preload="auto"></audio>
 
     <!-- 主畫面 -->
-    <div id="home-screen" class="arcade-panel flex flex-col fade-in">
+    <div id="home-screen" class="arcade-panel fade-in">
         <div class="text-6xl mb-4 text-center w-full flex justify-center">
             <i class="fas fa-compact-disc text-gray-400"></i>
         </div>
@@ -156,7 +155,7 @@
             CANTOPOP DJ
         </h1>
         <h2 class="text-xl font-bold text-center text-white mb-1">廣東歌迷序會</h2>
-        <p class="text-gray-400 text-center text-xs font-arcade mb-8">Hardcore Edition (6 Choices)</p>
+        <p class="text-gray-400 text-center text-xs font-arcade mb-8">Hardcore 6-Options Edition</p>
 
         <div class="space-y-2 w-full">
             <button onclick="startGame('year')" class="game-btn btn-cyan">
@@ -172,7 +171,7 @@
     </div>
 
     <!-- 遊戲畫面 -->
-    <div id="game-screen" class="arcade-panel hidden fade-in" style="border-color: #a855f7;">
+    <div id="game-screen" class="arcade-panel hidden fade-in" style="border-color: var(--neon-purple);">
         
         <div class="flex justify-between items-center bg-black/50 p-3 rounded-lg border border-gray-700 mb-4">
             <button onclick="returnToHome()" class="text-gray-400 hover:text-white">
@@ -185,13 +184,13 @@
         </div>
 
         <div class="flex flex-col items-center justify-center mb-4 relative w-full">
-            <div id="equalizer" class="flex gap-2 items-end h-[30px] mb-4">
-                <div class="eq-bar h-[10px]"></div><div class="eq-bar h-[10px]"></div><div class="eq-bar h-[10px]"></div><div class="eq-bar h-[10px]"></div><div class="eq-bar h-[10px]"></div>
+            <div id="equalizer" class="flex gap-2 items-end h-[35px] mb-3">
+                <div class="eq-bar h-[8px]"></div><div class="eq-bar h-[8px]"></div><div class="eq-bar h-[8px]"></div><div class="eq-bar h-[8px]"></div><div class="eq-bar h-[8px]"></div>
             </div>
 
             <div id="disc-cover" class="vinyl-record">
-                <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full border-2 border-black flex items-center justify-center">
-                    <div class="w-3 h-3 bg-black rounded-full"></div>
+                <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full border-2 border-black flex items-center justify-center">
+                    <div class="w-2 h-2 bg-black rounded-full"></div>
                 </div>
             </div>
             
@@ -204,9 +203,9 @@
         </div>
 
         <!-- 顯示當前已知的資訊 -->
-        <div id="question-info" class="mb-4 text-center font-bold text-base h-6 w-full break-words"></div>
+        <div id="question-info" class="mb-4 text-center font-bold text-base h-6 w-full flex items-center justify-center"></div>
 
-        <!-- 答題區域 (改為 2列，自動排3行 = 6個選項) -->
+        <!-- 答題區域 (2列，3行 = 6個選項) -->
         <div id="answer-area" class="grid grid-cols-2 gap-2 w-full">
             <!-- 按鈕由 JS 生成 -->
         </div>
@@ -233,8 +232,13 @@
         </button>
     </div>
 
-    <script>
-        // 擴充與精選的歌庫
+    <script type="text/javascript">
+        // 為了確保在 GitHub Pages 正常運行，加入全域錯誤捕捉
+        window.onerror = function(msg, url, line) {
+            console.error("Error: " + msg + " at line " + line);
+        };
+
+        // 核心歌庫 (已移除 Dear Jane 到底發生過什麼事)
         let songDatabase = [
             // 陳奕迅
             { title: '富士山下', artist: '陳奕迅', year: 2006, gender: 'M', query: '陳奕迅 富士山下' },
@@ -289,14 +293,14 @@
             { title: '大哥', artist: '衛蘭', year: 2005, gender: 'F', query: '衛蘭 大哥' },
             { title: '假使世界原來不像你預期', artist: '方皓玟', year: 2018, gender: 'F', query: '方皓玟 假使世界原來不像你預期' },
 
-            // 組合 (只保留 C AllStar 和一首 Dear Jane 的銀河修理員，已刪除到底發生過什麼事)
+            // 組合 
             { title: '天梯', artist: 'C AllStar', year: 2010, gender: 'G', query: 'C AllStar 天梯' },
             { title: '留下來的人', artist: 'C AllStar', year: 2021, gender: 'G', query: 'C AllStar 留下來的人' },
             { title: '專業失戀30年', artist: 'C AllStar', year: 2016, gender: 'G', query: 'C AllStar 專業失戀30年' },
             { title: '沒明日的恐懼', artist: 'C AllStar', year: 2021, gender: 'G', query: 'C AllStar 沒明日的恐懼' },
             { title: '銀河修理員', artist: 'Dear Jane', year: 2020, gender: 'G', query: 'Dear Jane 銀河修理員' },
             
-            // 單飛成員 (無 Mirror/姜濤)
+            // 單飛成員 
             { title: '人類群星閃耀時', artist: '柳應廷 Jer', year: 2021, gender: 'M', query: '柳應廷 人類群星閃耀時' },
             { title: '狂人日記', artist: '柳應廷 Jer', year: 2021, gender: 'M', query: '柳應廷 狂人日記' },
             { title: 'E先生 連環不幸事件', artist: '呂爵安 Edan', year: 2021, gender: 'M', query: '呂爵安 E先生' },
@@ -309,9 +313,86 @@
         let currentIndex = 0;
         let score = 0;
         let currentAudioUrl = '';
-        const audioPlayer = document.getElementById('audio-player');
+        let audioPlayer;
         const TOTAL_QUESTIONS = 10;
         let hasInteracted = false;
+
+        // 安全播放函式，避免 Safari 阻擋導致程式崩潰
+        function safePlay(player) {
+            try {
+                let playPromise = player.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log("Autoplay blocked: ", e);
+                        document.getElementById('audio-status').innerText = "⚠️ 請點擊播放";
+                    });
+                }
+            } catch (err) {
+                console.log("Play sync error", err);
+            }
+        }
+
+        // 超時 Fetch 函式，兼容舊版瀏覽器
+        function fetchWithTimeout(url, timeout = 4000) {
+            return new Promise((resolve, reject) => {
+                const timer = setTimeout(() => reject(new Error('Timeout')), timeout);
+                fetch(url)
+                    .then(response => {
+                        clearTimeout(timer);
+                        resolve(response);
+                    })
+                    .catch(err => {
+                        clearTimeout(timer);
+                        reject(err);
+                    });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            audioPlayer = document.getElementById('audio-player');
+
+            audioPlayer.addEventListener('play', () => {
+                document.getElementById('disc-cover').classList.add('animate-spin-slow');
+                document.getElementById('equalizer').classList.add('eq-playing');
+                document.getElementById('audio-status').innerText = "▶ NOW PLAYING";
+                document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i> PAUSE';
+                document.getElementById('play-btn').className = "w-full py-2 bg-gradient-to-r from-pink-500 to-red-600 rounded-lg text-white font-bold text-sm shadow-[0_0_10px_rgba(255,0,255,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2";
+            });
+
+            audioPlayer.addEventListener('pause', () => {
+                document.getElementById('disc-cover').classList.remove('animate-spin-slow');
+                document.getElementById('equalizer').classList.remove('eq-playing');
+                document.getElementById('audio-status').innerText = "⏸ PAUSED";
+                document.getElementById('play-btn').innerHTML = '<i class="fas fa-play"></i> PLAY AUDIO';
+                document.getElementById('play-btn').className = "w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg text-white font-bold text-sm shadow-[0_0_10px_rgba(0,243,255,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2";
+            });
+
+            audioPlayer.addEventListener('ended', () => {
+                document.getElementById('disc-cover').classList.remove('animate-spin-slow');
+                document.getElementById('equalizer').classList.remove('eq-playing');
+                document.getElementById('audio-status').innerText = "⏹ TRACK ENDED";
+                document.getElementById('play-btn').innerHTML = '<i class="fas fa-redo"></i> REPLAY';
+            });
+        });
+
+        // 綁定到 window 確保全域可用
+        window.togglePlay = function() {
+            if (!currentAudioUrl) return;
+            if (audioPlayer.paused) {
+                safePlay(audioPlayer);
+            } else {
+                audioPlayer.pause();
+            }
+        };
+
+        function stopMusic() {
+            if (audioPlayer && !audioPlayer.paused) {
+                audioPlayer.pause();
+            }
+            if (audioPlayer) audioPlayer.currentTime = 0;
+            document.getElementById('disc-cover').classList.remove('animate-spin-slow');
+            document.getElementById('equalizer').classList.remove('eq-playing');
+        }
 
         function showScreen(screenId) {
             const screens = ['home-screen', 'game-screen', 'result-screen'];
@@ -325,109 +406,6 @@
                     el.classList.remove('flex', 'flex-col');
                 }
             });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            audioPlayer.addEventListener('play', () => {
-                document.getElementById('disc-cover').classList.add('animate-spin-slow');
-                document.getElementById('equalizer').classList.add('eq-playing');
-                document.getElementById('audio-status').innerText = "▶ NOW PLAYING";
-                document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i> PAUSE';
-                document.getElementById('play-btn').className = "w-full py-2 bg-gradient-to-r from-pink-500 to-red-600 rounded-lg text-white font-bold text-sm shadow-[0_0_10px_rgba(255,0,255,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2";
-            });
-
-            audioPlayer.addEventListener('pause', () => {
-                document.getElementById('disc-cover').classList.remove('animate-spin-slow');
-                document.getElementById('equalizer').classList.remove('eq-playing');
-                document.getElementById('audio-status').innerText = "⏸ PAUSED";
-                document.getElementById('play-btn').innerHTML = '<i class="fas fa-play"></i> 播放音樂';
-                document.getElementById('play-btn').className = "w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg text-white font-bold text-sm shadow-[0_0_10px_rgba(0,243,255,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2";
-            });
-
-            audioPlayer.addEventListener('ended', () => {
-                document.getElementById('disc-cover').classList.remove('animate-spin-slow');
-                document.getElementById('equalizer').classList.remove('eq-playing');
-                document.getElementById('audio-status').innerText = "⏹ TRACK ENDED";
-                document.getElementById('play-btn').innerHTML = '<i class="fas fa-redo"></i> 重新播放';
-            });
-        });
-
-        function togglePlay() {
-            if (!currentAudioUrl) return;
-            if (audioPlayer.paused) {
-                audioPlayer.play().catch(e => {
-                    console.error("Playback failed:", e);
-                    document.getElementById('audio-status').innerText = "⚠️ 請點擊播放";
-                });
-            } else {
-                audioPlayer.pause();
-            }
-        }
-
-        function stopMusic() {
-            if(!audioPlayer.paused) {
-                audioPlayer.pause();
-            }
-            audioPlayer.currentTime = 0;
-            document.getElementById('disc-cover').classList.remove('animate-spin-slow');
-            document.getElementById('equalizer').classList.remove('eq-playing');
-        }
-
-        // 自動刪除無音樂歌曲機制
-        async function fetchAudioFromiTunes(songObj) {
-            const playBtn = document.getElementById('play-btn');
-            const status = document.getElementById('audio-status');
-            
-            playBtn.disabled = true;
-            playBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 載入中...';
-            status.innerText = "CONNECTING...";
-
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000); 
-                
-                const response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(songObj.query)}&entity=song&country=hk&limit=1`, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                
-                const data = await response.json();
-                
-                if (data.results && data.results.length > 0) {
-                    currentAudioUrl = data.results[0].previewUrl;
-                    audioPlayer.src = currentAudioUrl;
-                    
-                    playBtn.disabled = false;
-                    status.innerText = "READY";
-                    playBtn.innerHTML = '<i class="fas fa-play"></i> 播放音樂';
-                    
-                    if(hasInteracted) {
-                        audioPlayer.play().catch(e => {
-                             console.log("Autoplay prevented");
-                        });
-                    }
-                } else {
-                    throw new Error("No music found for this track");
-                }
-            } catch (error) {
-                console.warn("找不到音樂，正在將此歌從資料庫刪除並替換...", songObj.title);
-                
-                // 1. 從總資料庫中刪除這首歌
-                const indexInDb = songDatabase.findIndex(s => s.title === songObj.title);
-                if(indexInDb > -1) {
-                    songDatabase.splice(indexInDb, 1);
-                }
-
-                // 2. 隨機選一首不在目前 Queue 裡面的新歌
-                let newSong;
-                let attempts = 0;
-                do {
-                    newSong = songDatabase[Math.floor(Math.random() * songDatabase.length)];
-                    attempts++;
-                } while (gameQueue.includes(newSong) && attempts < 20);
-
-                // 3. 替換目前這題並重新載入
-                gameQueue[currentIndex] = newSong;
-                loadQuestion(); 
-            }
         }
 
         function shuffle(array) {
@@ -445,10 +423,12 @@
             return targetYear + offsets[Math.floor(Math.random() * offsets.length)];
         }
 
-        function startGame(mode) {
-            hasInteracted = true;
-            audioPlayer.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
-            audioPlayer.play().catch(e=>{});
+        window.startGame = function(mode) {
+            // 解鎖 iOS 音訊限制
+            if (audioPlayer) {
+                audioPlayer.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+                safePlay(audioPlayer);
+            }
             
             currentMode = mode;
             score = 0;
@@ -466,31 +446,96 @@
             };
             document.getElementById('game-title').innerText = titles[mode];
 
-            loadQuestion();
+            prepareAndLoadQuestion();
+        };
+
+        // 準備題目 (包含自動刪除與替換機制)
+        async function prepareAndLoadQuestion() {
+            stopMusic();
+            const answerArea = document.getElementById('answer-area');
+            const playBtn = document.getElementById('play-btn');
+            const status = document.getElementById('audio-status');
+            const infoDisplay = document.getElementById('question-info');
+
+            // 顯示載入中
+            document.getElementById('current-question').innerText = currentIndex + 1;
+            document.getElementById('total-questions').innerText = TOTAL_QUESTIONS;
+            infoDisplay.innerText = "";
+            answerArea.innerHTML = '<div class="col-span-2 text-center text-cyan-400 font-bold py-4">🎵 正在尋找音源...</div>';
+            playBtn.disabled = true;
+            playBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> LOADING...';
+            status.innerText = "CONNECTING...";
+
+            let currentSong = gameQueue[currentIndex];
+            let audioFound = false;
+            
+            // 嘗試抓取音樂，若失敗則刪除該歌並替換，最多試 5 次防止無窮迴圈
+            for (let attempts = 0; attempts < 5; attempts++) {
+                try {
+                    let url = `https://itunes.apple.com/search?term=${encodeURIComponent(currentSong.query)}&entity=song&country=hk&limit=1`;
+                    let response = await fetchWithTimeout(url, 3000);
+                    let data = await response.json();
+                    
+                    if (data.results && data.results.length > 0) {
+                        currentAudioUrl = data.results[0].previewUrl;
+                        audioPlayer.src = currentAudioUrl;
+                        audioFound = true;
+                        break; // 成功找到音樂，跳出迴圈
+                    } else {
+                        throw new Error("No preview available");
+                    }
+                } catch (err) {
+                    console.log("找不到音樂，刪除並替換:", currentSong.title);
+                    // 從總庫刪除
+                    songDatabase = songDatabase.filter(s => s.title !== currentSong.title);
+                    
+                    // 隨機選一首新的且不在 Queue 中的歌
+                    let newSong;
+                    let findAttempts = 0;
+                    do {
+                        newSong = songDatabase[Math.floor(Math.random() * songDatabase.length)];
+                        findAttempts++;
+                    } while (gameQueue.includes(newSong) && findAttempts < 20);
+                    
+                    currentSong = newSong;
+                    gameQueue[currentIndex] = currentSong;
+                }
+            }
+
+            // 渲染畫面
+            playBtn.disabled = false;
+            status.innerText = "READY";
+            playBtn.innerHTML = '<i class="fas fa-play"></i> 播放音樂';
+            
+            if (audioFound) {
+                safePlay(audioPlayer);
+            } else {
+                // 如果連續 5 首失敗 (極端情況)，給一個假按鈕
+                status.innerText = "⚠️ 音樂載入失敗";
+                playBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 盲估模式';
+            }
+
+            renderOptions(currentSong);
         }
 
-        function loadQuestion() {
-            stopMusic();
-            document.getElementById('current-question').innerText = currentIndex + 1;
-            
-            const currentSong = gameQueue[currentIndex];
+        // 渲染文字與按鈕
+        function renderOptions(currentSong) {
             const answerArea = document.getElementById('answer-area');
             const infoDisplay = document.getElementById('question-info');
-            
             answerArea.innerHTML = ''; 
 
-            fetchAudioFromiTunes(currentSong);
-
-            // 設定標題提示文字與顏色
+            // 根據模式設定提示文字
             if (currentMode === 'year') {
                 infoDisplay.innerText = `《${currentSong.title}》 - ${currentSong.artist}`;
-                infoDisplay.className = "mb-4 text-center font-bold text-base h-6 text-gray-200 w-full break-words";
+                infoDisplay.className = "mb-4 text-center font-bold text-base text-gray-200 w-full break-words";
             } else if (currentMode === 'singer') {
-                infoDisplay.innerText = `請聆聽音樂猜測歌手`;
-                infoDisplay.className = "mb-4 text-center font-bold text-base h-6 text-pink-400 w-full break-words";
+                // 估歌手：不顯示歌名
+                infoDisplay.innerText = `❓ 請聆聽音樂猜測歌手 ❓`;
+                infoDisplay.className = "mb-4 text-center font-bold text-base text-pink-400 w-full break-words";
             } else if (currentMode === 'song') {
-                infoDisplay.innerText = `請聆聽音樂猜測歌名`;
-                infoDisplay.className = "mb-4 text-center font-bold text-base h-6 text-cyan-300 w-full break-words";
+                // 估歌名：不顯示歌手
+                infoDisplay.innerText = `❓ 請聆聽音樂猜測歌名 ❓`;
+                infoDisplay.className = "mb-4 text-center font-bold text-base text-cyan-300 w-full break-words";
             }
 
             let options = [];
@@ -561,12 +606,12 @@
                 const btn = document.createElement('button');
                 btn.className = "btn-option";
                 btn.innerText = opt + (currentMode === 'year' ? ' 年' : '');
-                btn.onclick = () => checkButtonAnswer(opt, correctAns, btn);
+                btn.onclick = () => window.checkButtonAnswer(opt, correctAns, btn);
                 answerArea.appendChild(btn);
             });
         }
 
-        function checkButtonAnswer(selected, correct, btnElement) {
+        window.checkButtonAnswer = function(selected, correct, btnElement) {
             const buttons = document.getElementById('answer-area').querySelectorAll('button');
             buttons.forEach(b => b.disabled = true);
 
@@ -588,12 +633,12 @@
                 });
             }
             setTimeout(nextQuestion, 1500);
-        }
+        };
 
         function nextQuestion() {
             currentIndex++;
             if (currentIndex < gameQueue.length) {
-                loadQuestion();
+                prepareAndLoadQuestion(); 
             } else {
                 endGame();
             }
@@ -631,10 +676,10 @@
             }
         }
 
-        function returnToHome() {
+        window.returnToHome = function() {
             stopMusic();
             showScreen('home-screen');
-        }
+        };
     </script>
 </body>
 </html>
